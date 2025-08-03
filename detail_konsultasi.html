@@ -1,0 +1,50 @@
+<!-- accounts/templates/accounts/detail_konsultasi.html -->
+{% extends 'accounts/admin_base.html' %}
+
+{% block title %}Detail Konsultasi - {{ konsultasi.nama }}{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h4>Detail Konsultasi</h4>
+        <p class="text-muted">Informasi lengkap tentang konsultasi ini.</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header">
+                <h5>Detail Konsultasi untuk {{ konsultasi.nama }}</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><strong>Nama Klien:</strong> {{ konsultasi.nama }}</li>
+                    <li class="list-group-item"><strong>Email:</strong> {{ konsultasi.email }}</li>
+                    <li class="list-group-item"><strong>Nomor Telepon:</strong> {{ konsultasi.no_hp|default:"-" }}</li>
+                    <li class="list-group-item"><strong>Jurusan/Bidang Studi:</strong> {{ konsultasi.jurusan|default:"-" }}</li>
+                    <li class="list-group-item"><strong>Minat Karir / Pesan:</strong> {{ konsultasi.minat_karir|linebreaksbr }}</li>
+                    <li class="list-group-item"><strong>Tanggal Janji:</strong> {{ konsultasi.tanggal_janji|default:"-" }}</li>
+                    <li class="list-group-item"><strong>Waktu Janji:</strong> {{ konsultasi.waktu_janji|default:"-" }}</li>
+                    <li class="list-group-item"><strong>Status:</strong> {{ konsultasi.status|capfirst }}</li>
+                    <li class="list-group-item"><strong>Dibuat Pada:</strong> {{ konsultasi.tanggal_dibuat|date:"d M Y H:i" }}</li>
+                    {% if konsultasi.user %}
+                    <li class="list-group-item"><strong>Ditugaskan Kepada:</strong> {{ konsultasi.user.username }}</li>
+                    {% else %}
+                    <li class="list-group-item"><strong>Ditugaskan Kepada:</strong> Belum Ditugaskan</li>
+                    {% endif %}
+                </ul>
+
+                <div class="mt-4 text-center">
+                    <a href="{% url 'update_konsultasi' pk=konsultasi.pk %}" class="btn btn-warning me-2">Edit Konsultasi</a>
+                    <form action="{% url 'delete_konsultasi' pk=konsultasi.pk %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus konsultasi ini?');">Hapus Konsultasi</button>
+                    </form>
+                    <a href="{% url 'appointments' %}" class="btn btn-secondary ms-2">Kembali ke Janji Temu</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,90 @@
+    <!-- accounts/templates/accounts/career_services.html -->
+    {% extends 'accounts/base.html' %}
+
+    {% block title %}Layanan Karir{% endblock %}
+
+    {% block extra_head %}
+    <style>
+        .service-card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            border-radius: 15px; /* Tambahkan sudut membulat */
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        .service-icon {
+            font-size: 3rem;
+            color: #0d6efd;
+            margin-bottom: 1rem;
+        }
+        .btn-primary, .btn-success, .btn-outline-secondary {
+            border-radius: 50px; /* Membuat tombol lebih bulat */
+        }
+    </style>
+    {% endblock %}
+
+    {% block content %}
+    <div class="container my-5">
+        <h1 class="text-center mb-4 display-5 fw-bold">Layanan Karir Kami</h1>
+        <p class="text-center lead mb-5">Kami menyediakan berbagai layanan untuk membantu Anda mencapai tujuan karir.</p>
+
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card service-card h-100 p-4 text-center">
+                    <div class="card-body">
+                        <i class="bi bi-file-earmark-person service-icon"></i>
+                        <h5 class="card-title fw-bold">Konsultasi CV & Resume</h5>
+                        <p class="card-text">Bantu kami membuat CV dan resume yang menonjol, menarik perhatian perekrut.</p>
+                        <ul class="list-unstyled text-start small mt-3">
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Optimasi Kata Kunci</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Desain Profesional</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Penyusunan Konten</li>
+                        </ul>
+                        {# URL Diperbarui untuk menunjuk ke formulir konsultasi spesifik #}
+                        <a href="{% url 'consultation_form_service' service_name='konsultasi-cv-resume' %}" class="btn btn-primary mt-3">Mulai Konsultasi CV & Resume</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card service-card h-100 p-4 text-center">
+                    <div class="card-body">
+                        <i class="bi bi-chat-dots service-icon"></i>
+                        <h5 class="card-title fw-bold">Persiapan Wawancara</h5>
+                        <p class="card-text">Latih keterampilan wawancara Anda dan tingkatkan rasa percaya diri.</p>
+                        <ul class="list-unstyled text-start small mt-3">
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Simulasi Wawancara</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Strategi Jawaban</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Tips Bahasa Tubuh</li>
+                        </ul>
+                        {# URL Diperbarui untuk menunjuk ke formulir konsultasi spesifik #}
+                        <a href="{% url 'consultation_form_service' service_name='persiapan-wawancara' %}" class="btn btn-primary mt-3">Mulai Konsultasi Wawancara</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card service-card h-100 p-4 text-center">
+                    <div class="card-body">
+                        <i class="bi bi-lightbulb service-icon"></i>
+                        <h5 class="card-title fw-bold">Tes Minat & Bakat</h5>
+                        <p class="card-text">Temukan potensi sejati Anda dan arahkan karir Anda dengan tepat.</p>
+                        <ul class="list-unstyled text-start small mt-3">
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Analisis Kepribadian</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Penilaian Keterampilan</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Rekomendasi Karir</li>
+                        </ul>
+                        {# URL Diperbarui untuk menunjuk ke formulir konsultasi spesifik #}
+                        <a href="{% url 'consultation_form_service' service_name='tes-minat-bakat' %}" class="btn btn-primary mt-3">Mulai Tes Minat & Bakat</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-5">
+            <h2>Siap Memulai?</h2>
+            <p class="lead">Pesan sesi konsultasi pertama Anda hari ini!</p>
+            {# URL Diperbarui untuk menunjuk ke formulir konsultasi umum #}
+            <a href="{% url 'consultation_form' %}" class="btn btn-lg btn-success">Jadwalkan Konsultasi Umum</a>
+        </div>
+    </div>
+    {% endblock %}

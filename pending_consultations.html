@@ -1,0 +1,76 @@
+<!-- accounts/templates/accounts/pending_consultations.html -->
+{% extends 'accounts/admin_base.html' %}
+
+{% block title %}Konsultasi Tertunda{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h4>Konsultasi Publik Tertunda</h4>
+        <p class="text-muted">Daftar permintaan konsultasi yang belum ditugaskan kepada konsultan.</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Permintaan Baru</h5>
+            </div>
+            <div class="card-body">
+                {% if messages %}
+                    <div class="messages mb-3">
+                        {% for message in messages %}
+                        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% if pending_consultations %}
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nama</th>
+                                <th>Email</th>
+                                <th>No. HP</th>
+                                <th>Minat Karir / Pesan</th>
+                                <th>Tgl. Janji</th>
+                                <th>Waktu Janji</th>
+                                <th>Dibuat Pada</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for konsul in pending_consultations %}
+                            <tr>
+                                <td>{{ konsul.nama }}</td>
+                                <td>{{ konsul.email }}</td>
+                                <td>{{ konsul.no_hp|default:"-" }}</td>
+                                <td>{{ konsul.minat_karir|truncatechars:70 }}</td>
+                                <td>{{ konsul.tanggal_janji|default:"-" }}</td>
+                                <td>{{ konsul.waktu_janji|default:"-" }}</td>
+                                <td>{{ konsul.tanggal_dibuat|date:"d M Y H:i" }}</td>
+                                <td>
+                                    <form action="{% url 'assign_consultation' pk=konsul.pk %}" method="post" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-sm btn-success">Tugaskan ke Saya</button>
+                                    </form>
+                                    {# Anda bisa menambahkan tombol untuk melihat detail lebih lanjut jika diperlukan #}
+                                    {# <a href="{% url 'detail_konsultasi' pk=konsul.pk %}" class="btn btn-sm btn-info ms-2">Detail</a> #}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-center text-muted">Tidak ada permintaan konsultasi tertunda saat ini.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

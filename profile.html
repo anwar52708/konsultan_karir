@@ -1,0 +1,45 @@
+<!-- accounts/templates/accounts/profile.html -->
+{% extends 'accounts/admin_base.html' %}
+
+{% block title %}Profil Saya{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h4>Profil Pengguna</h4>
+        <p class="text-muted">Kelola informasi pribadi Anda</p>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h5>Informasi Profil</h5>
+    </div>
+    <div class="card-body">
+        <form>
+            <div class="mb-3 text-center">
+                <img src="https://placehold.co/150x150/0d6efd/ffffff?text={{ user_profile.username|slice:":1"|upper }}" alt="Profil Avatar" class="rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover; border: 3px solid #0d6efd;">
+                <input type="file" class="form-control" id="profile_picture" accept="image/*">
+                <div class="form-text">Unggah gambar profil Anda.</div>
+            </div>
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" value="{{ user_profile.username }}" disabled>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" value="{{ user_profile.email }}">
+            </div>
+            <div class="mb-3">
+                <label for="full_name" class="form-label">Nama Lengkap</label>
+                <input type="text" class="form-control" id="full_name" value="{{ user_profile.full_name }}">
+            </div>
+            <div class="mb-3">
+                <label for="bio" class="form-label">Bio Singkat</label>
+                <textarea class="form-control" id="bio" rows="3">{{ user_profile.bio }}</textarea>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Simpan Perubahan</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

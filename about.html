@@ -1,0 +1,74 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Tentang Kami - Konsultan Karir{% endblock %}
+
+{% block extra_head %}
+<style>
+    .hero-banner {
+        background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://placehold.co/1920x400/0d6efd/ffffff?text=Tentang+Kami');
+        background-size: cover;
+        background-position: center;
+        color: white;
+        padding: 80px 0;
+        text-align: center;
+        border-radius: 0 0 15px 15px;
+    }
+    .team-member img {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 4px solid #0d6efd;
+        margin-bottom: 15px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <section class="hero-banner mb-5">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Siapa Kami</h1>
+            <p class="lead">Misi kami adalah membimbing Anda menuju kesuksesan karir.</p>
+        </div>
+    </section>
+
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <div class="card p-4">
+                    <h2 class="text-center mb-4">Visi & Misi</h2>
+                    <p class="text-justify">
+                        Visi kami adalah menjadi mitra terdepan bagi individu dalam mencapai potensi karir maksimal mereka. Kami percaya setiap orang memiliki keunikan dan bakat yang dapat dikembangkan untuk mencapai karir impian.
+                    </p>
+                    <p class="text-justify">
+                        Misi kami adalah menyediakan konsultasi karir yang personal, informatif, dan memberdayakan. Kami berkomitmen untuk memberikan panduan ahli, alat praktis, dan dukungan berkelanjutan untuk membantu klien kami menavigasi tantangan karir dan meraih tujuan mereka.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="text-center my-5">Tim Kami</h2>
+        <div class="row text-center">
+            <div class="col-md-4 mb-4">
+                <div class="card p-4 h-100">
+                    <div class="team-member">
+                        <img src="https://placehold.co/150x150/0d6efd/ffffff?text=Avatar1" alt="Anggota Tim 1" class="img-fluid">
+                        <h5>Anwar ibrahim</h5>
+                        <p class="text-muted">Konsultan Senior</p>
+                        <p>Berpengalaman lebih dari 10 tahun dalam pengembangan karir dan perekrutan.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card p-4 h-100">
+                    <div class="team-member">
+                        <img src="https://placehold.co/150x150/0d6efd/ffffff?text=Avatar2" alt="Anggota Tim 2" class="img-fluid">
+                        <h5>Roby anggara</h5>
+                        <p class="text-muted">Spesialis Minat Bakat</p>
+                        <p>Ahli dalam membantu individu menemukan potensi dan arah karir yang sesuai.</p>
+                    </div>
+                </div>
+            </div>
+            <d
+    </div>
+{% endblock %}

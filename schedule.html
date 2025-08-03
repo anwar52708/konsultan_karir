@@ -1,0 +1,81 @@
+<!-- accounts/templates/accounts/schedule.html -->
+{% extends 'accounts/admin_base.html' %}
+
+{% block title %}Jadwal Saya{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h4>Jadwal Konsultasi Saya</h4>
+        <p class="text-muted">Daftar janji temu dan kegiatan yang akan datang.</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Jadwal Mendatang</h5>
+            </div>
+            <div class="card-body">
+                {% if messages %}
+                    <div class="messages mb-3">
+                        {% for message in messages %}
+                        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% if scheduled_appointments %}
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Klien</th>
+                                <th>Tanggal</th>
+                                <th>Waktu</th>
+                                <th>Minat Karir / Pesan</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for app in scheduled_appointments %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ app.nama }}</td>
+                                <td>{{ app.tanggal_janji|default:"-" }}</td>
+                                <td>{{ app.waktu_janji|default:"-" }}</td>
+                                <td>{{ app.minat_karir|truncatechars:70 }}</td>
+                                <td>
+                                    {% if app.status == 'terjadwal' %}
+                                        <span class="badge bg-success">Terjadwal</span>
+                                    {% else %}
+                                        <span class="badge bg-secondary">{{ app.status|capfirst }}</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="{% url 'detail_konsultasi' pk=app.pk %}" class="btn btn-sm btn-info me-1">Detail</a>
+                                    <a href="{% url 'update_konsultasi' pk=app.pk %}" class="btn btn-sm btn-warning me-1">Edit</a>
+                                    {# Tombol Selesai bisa ditambahkan jika Anda ingin fitur untuk menandai janji temu selesai #}
+                                    <form action="{% url 'cancel_appointment' pk=app.pk %}" method="post" class="d-inline">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Apakah Anda yakin ingin membatalkan janji temu ini?');">Batalkan</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-center text-muted">Tidak ada jadwal konsultasi yang akan datang.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

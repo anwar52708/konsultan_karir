@@ -1,0 +1,141 @@
+<!-- accounts/templates/accounts/reports.html -->
+{% extends 'accounts/admin_base.html' %}
+
+{% block title %}Laporan & Analisis{% endblock %}
+
+{% block extra_head %}
+{# Sertakan Chart.js library #}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    /* Pastikan kanvas memiliki tinggi yang cukup untuk terlihat */
+    #consultationStatusChart {
+        max-height: 400px; /* Atur tinggi maksimum */
+        width: 100%; /* Pastikan lebar penuh dalam container */
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h4>Laporan & Analisis</h4>
+        <p class="text-muted">Ringkasan performa konsultan karir</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5>Statistik Bulanan</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Total Konsultasi Bulan Ini
+                        <span class="badge bg-primary rounded-pill">{{ total_consultations_month }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Klien Baru Bulan Ini
+                        <span class="badge bg-success rounded-pill">{{ new_clients_month }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Layanan Paling Populer
+                        <span class="badge bg-info text-dark">{{ popular_service }}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5>Grafik Performa (Distribusi Status Konsultasi)</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="consultationStatusChart"></canvas>
+                <p class="text-center text-muted mt-3">Grafik ini menunjukkan jumlah konsultasi berdasarkan statusnya.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Data dari Django view, pastikan aman dari XSS dengan |safe filter
+        // dan kemudian di-parse sebagai JSON
+        const labels = JSON.parse('{{ chart_labels|safe }}');
+        const data = JSON.parse('{{ chart_data|safe }}');
+
+        // Hanya inisialisasi grafik jika ada data
+        if (labels.length > 0 && data.length > 0) {
+            const ctx = document.getElementById('consultationStatusChart').getContext('2d');
+            const consultationStatusChart = new Chart(ctx, {
+                type: 'bar', // Bisa diubah menjadi 'pie', 'line', 'doughnut', dll.
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Jumlah Konsultasi',
+                        data: data,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.6)', // Merah
+                            'rgba(54, 162, 235, 0.6)', // Biru
+                            'rgba(255, 206, 86, 0.6)', // Kuning
+                            'rgba(75, 192, 192, 0.6)', // Hijau Teal
+                            'rgba(153, 102, 255, 0.6)', // Ungu
+                            'rgba(255, 159, 64, 0.6)'  // Oranye
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false, // Penting untuk responsivitas dalam div
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Jumlah'
+                            },
+                            ticks: {
+                                precision: 0 // Pastikan nilai sumbu Y adalah bilangan bulat
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Status Konsultasi'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false // Sembunyikan legenda jika hanya ada satu dataset
+                        },
+                        title: {
+                            display: true,
+                            text: 'Distribusi Status Konsultasi'
+                        }
+                    }
+                }
+            });
+        } else {
+            // Tampilkan pesan jika tidak ada data untuk grafik
+            const chartContainer = document.getElementById('consultationStatusChart').parentNode;
+            chartContainer.innerHTML = '<p class="text-center text-muted">Tidak ada data konsultasi untuk menampilkan grafik.</p>';
+        }
+    });
+</script>
+{% endblock %}

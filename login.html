@@ -1,0 +1,89 @@
+<!-- accounts/templates/accounts/login.html -->
+{% extends 'accounts/base.html' %}
+
+{% block title %}Login - Konsultan Karir{% endblock %}
+
+{% block extra_head %}
+<style>
+    body {
+        background-color: #f8f9fa; /* Light background color */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh; /* Ensure the page fills the viewport height */
+        margin: 0;
+    }
+    .login-container {
+        max-width: 400px;
+        width: 100%;
+        padding: 30px;
+        background-color: #ffffff;
+        border-radius: 15px; /* Rounded corners */
+        box-shadow: 0 8px 16px rgba(0,0,0,0.1); /* More prominent shadow */
+    }
+    .login-container h2 {
+        margin-bottom: 25px;
+        color: #343a40;
+        font-weight: bold;
+    }
+    .form-control {
+        border-radius: 10px; /* Rounded corners for input */
+        padding: 12px 15px;
+    }
+    .btn-primary {
+        border-radius: 50px; /* More rounded button */
+        padding: 10px 25px;
+        font-weight: bold;
+    }
+    .alert {
+        border-radius: 10px; /* Rounded corners for alert */
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <div class="login-container text-center">
+        <h2 class="mb-4">Login Konsultan Karir</h2>
+
+        {# Display messages from Django messages framework #}
+        {% if messages %}
+            <div class="messages mb-3">
+                {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="post" novalidate> {# Add novalidate to prevent browser's default validation #}
+            {% csrf_token %} {# This is crucial for Django form security #}
+
+            {# Render fields from Django login form #}
+            {% for field in form %}
+                <div class="mb-3 text-start"> {# Aligned text to start for labels and help text #}
+                    {{ field.label_tag }} {# Display label for each field #}
+                    {{ field }} {# Render the input field #}
+                    {% if field.help_text %}
+                        <div class="form-text">{{ field.help_text }}</div>
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <div class="text-danger small mt-1">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+
+            {# Display non-field form errors (e.g., general authentication errors) #}
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger mt-3" role="alert">
+                    {% for error in form.non_field_errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <button type="submit" class="btn btn-primary w-100 mb-3">Login</button>
+            <p class="text-muted"><a href="{% url 'home' %}" class="text-decoration-none">Kembali ke Beranda</a></p>
+        </form>
+    </div>
+{% endblock %}

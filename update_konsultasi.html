@@ -1,0 +1,65 @@
+<!-- accounts/templates/accounts/update_konsultasi.html -->
+{% extends 'accounts/admin_base.html' %}
+
+{% block title %}Edit Konsultasi - {{ konsultasi.nama }}{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h4>Edit Konsultasi</h4>
+        <p class="text-muted">Perbarui detail konsultasi untuk {{ konsultasi.nama }}.</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header">
+                <h5>Formulir Edit Konsultasi</h5>
+            </div>
+            <div class="card-body">
+                {% if messages %}
+                    <div class="messages mb-3">
+                        {% for message in messages %}
+                        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <form method="post" novalidate>
+                    {% csrf_token %}
+
+                    {% for field in form %}
+                        <div class="mb-3 text-start">
+                            {{ field.label_tag }}
+                            {{ field }}
+                            {% if field.help_text %}
+                                <div class="form-text">{{ field.help_text }}</div>
+                            {% endif %}
+                            {% for error in field.errors %}
+                                <div class="text-danger small mt-1">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger mt-3" role="alert">
+                            {% for error in form.non_field_errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <button type="submit" class="btn btn-primary w-100 mt-3">Simpan Perubahan</button>
+                    <p class="text-muted mt-3 text-center">
+                        <a href="{% url 'detail_konsultasi' pk=konsultasi.pk %}" class="text-decoration-none me-3">Kembali ke Detail</a>
+                        <a href="{% url 'appointments' %}" class="text-decoration-none">Kembali ke Janji Temu</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

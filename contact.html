@@ -1,0 +1,58 @@
+<!-- accounts/templates/accounts/contact.html -->
+{% extends 'accounts/base.html' %}
+
+{% block title %}Kontak Kami - Konsultan Karir{% endblock %}
+
+{% block extra_head %}
+<style>
+    .hero-banner {
+        background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://placehold.co/1920x400/0d6efd/ffffff?text=Hubungi+Kami');
+        background-size: cover;
+        background-position: center;
+        color: white;
+        padding: 80px 0;
+        text-align: center;
+        border-radius: 0 0 15px 15px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <section class="hero-banner mb-5">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Hubungi Kami</h1>    
+            <p class="lead">Kami siap membantu Anda mencapai tujuan karir Anda.</p>
+        </div>
+    </section>
+
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <div class="card p-4">
+                    <h2 class="text-center mb-4">Informasi Kontak</h2>
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <h5><i class="bi bi-geo-alt-fill me-2 text-primary"></i>Alamat</h5>
+                            <p>Jl. Contoh No. 123, Kota Anda, Kode Pos 12345</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5><i class="bi bi-envelope-fill me-2 text-primary"></i>Email</h5>
+                            <p>info@konsultankarir.com</p>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <h5><i class="bi bi-phone-fill me-2 text-primary"></i>Telepon</h5>
+                            <p>+62 812 3456 7890</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5><i class="bi bi-clock-fill me-2 text-primary"></i>Jam Kerja</h5>
+                            <p>Senin - Jumat: 09:00 - 17:00 WIB</p>
+                        </div>
+                    </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
